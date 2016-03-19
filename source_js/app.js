@@ -6,6 +6,14 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/firstview.html',
     controller: 'FirstController'
   }).
+  when('/users', {
+    templateUrl: 'partials/users.html',
+    controller: 'UsersController'
+  }).
+  when('/addUser', {
+    templateUrl: 'partials/addUser.html',
+    controller: 'AddUserController'
+  }).
   when('/secondview', {
     templateUrl: 'partials/secondview.html',
     controller: 'SecondController'

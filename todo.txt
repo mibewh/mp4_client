@@ -1,0 +1,34 @@
+Navigation - DONE
+Settings 
+	Header - DONE
+Users
+	Profile
+		Info
+		Tasks w/ info
+			Complete button (moves to completed tasks)
+	View Users - DONE
+		Show info - DONE
+		Delete button - DONE
+		Show completed tasks button
+	Add user - DONE
+	 	Frontend validation - DONE
+	 	Validate doesn't already exist - DONE
+Tasks
+	Show all tasks
+	Filter
+		Pending
+		Completed
+		All
+	Sort (data, deadline, taskname, username)
+		Asc/Desc
+	Info/Delete button
+	Pagination
+		Deleting update pagination
+	Add Task
+		Visual date entry
+		User dropdown
+		Validation
+			Frontend
+			Backend(?)
+	Edit Task
+		Also has completed button

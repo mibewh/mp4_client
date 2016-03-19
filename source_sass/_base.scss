@@ -1,1 +1,16 @@
 // Add any custom Sass & CSS here
+.top-bar {
+	margin-bottom: 20px;
+}
+
+.tableButton {
+	margin-bottom: 0px;
+}
+
+
+.table-scroll {
+  width: 100%;
+  // overflow: hidden;
+  overflow-x: auto;
+  // clear: both;
+}

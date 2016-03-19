@@ -1,0 +1,25 @@
+<div ng-controller='UsersController'>
+	<div class="row">
+		<div class="small-6 columns">
+			<h1>Users</h1>
+		</div>
+		<div class="small-6 columns text-right">
+			<a href="#/addUser" class="button success" id="addUser">Add User</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-12 columns">
+			<div class="table-scroll">
+				<table>
+					<tbody>
+						<tr ng-repeat="user in users">
+							<td><a href="#/users/{{user._id}}">{{user.name}}</a></td>
+							<td>{{user.email}}</td>
+							<td class="text-right"><button ng-click="delete(user._id)" type="button" class="button tableButton alert">Delete</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
