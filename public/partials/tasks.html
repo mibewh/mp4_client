@@ -1,0 +1,51 @@
+<div ng-controller='TasksController'>
+  <div class="row">
+    <div class="small-12 columns">
+      <h1>Tasks</h1>
+      <div class="large-6 small-12 columns">
+        <label>Sort By
+          <select ng-model="orderType" ng-change="update()"
+            ng-options="option for option in ['dateCreated', 'deadline', 'name', 'assignedUserName']"></select>
+          <input type="radio" ng-model="order" ng-value="false" ng-change="update()" ng-selected><label for="ascending">Ascending</label>
+          <input type="radio" ng-model="order" ng-value="true" ng-change="update()"><label for="descending">Descending</label>
+        </label>
+      </div>
+      <div class="large-6 small-12 columns">
+        <input type="radio" ng-model="subset" value="pending" ng-change="update()"><label for="pending">Pending</label>
+        <input type="radio" ng-model="subset" value="completed" ng-change="update()"><label for="completed">Completed</label>
+        <input type="radio" ng-model="subset" value="all" ng-change="update()"><label for="all">All</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="small-4 columns">
+        <button class="button" ng-disabled="page == 0" ng-click="changePage(page-1)">Previous</button>
+      </div>
+      <div class="small-4 columns text-center">
+        <a class="button success" ng-href="#/addTask">New Task</a>
+      </div>
+      <div class="small-4 columns">
+        <button class="button right" ng-disabled="page == pages" ng-click="changePage(page+1)">Next</button>
+      </div>
+      <div class="table-scroll">
+				<table>
+          <thead>
+            <th>Task</th>
+            <th>Deadline</th>
+            <th>Assigned</th>
+            <th></th>
+          </thead>
+					<tbody>
+						<tr ng-repeat="task in tasks">
+							<td><a href="#/tasks/{{task._id}}">{{task.name}}</a></td>
+              <td ng-bind="getDate(task.deadline)"></td>
+							<td>{{task.assignedUserName}}</td>
+							<td class="text-right"><button ng-click="delete(task)" type="button" class="button tableButton alert">Delete</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div ng-controller='ProfileController'>
+  <div class="row">
+    <div class="small-6 columns">
+      <h1>Profile</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-6 columns">
+      <h3 ng-bind="user.name"></h2>
+    </div>
+    <div class="small-6 columns">
+      <h3 ng-bind="user.email"></h3>
+    </div>
+    <hr>
+  </div>
+  <div class="row">
+		<div class="small-12 columns">
+      <h2>Pending Tasks</h2>
+			<div class="table-scroll">
+				<table>
+
+				</table>
+			</div>
+      <div class="text-center">
+        <button class="button">Show Completed</button>
+      </div>
+      <div class="table-scroll" ng-show="showCompleted">
+				<table>
+
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

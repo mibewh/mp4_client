@@ -1,29 +1,33 @@
 Navigation - DONE
-Settings 
+Settings - DONE
 	Header - DONE
 Users
 	Profile
-		Info
+		Info - DONE
 		Tasks w/ info
 			Complete button (moves to completed tasks)
+		Show completed tasks button
 	View Users - DONE
 		Show info - DONE
 		Delete button - DONE
-		Show completed tasks button
 	Add user - DONE
 	 	Frontend validation - DONE
 	 	Validate doesn't already exist - DONE
 Tasks
 	Show all tasks
-	Filter
-		Pending
-		Completed
-		All
-	Sort (data, deadline, taskname, username)
-		Asc/Desc
-	Info/Delete button
-	Pagination
-		Deleting update pagination
+		Filter - DONE
+			Pending
+			Completed
+			All
+		Sort (data, deadline, taskname, username) - DONE
+			Asc/Desc
+		Info/Delete button - DONE
+		Pagination - DONE
+		Delete Task
+			Deleting a task should reload page's tasks to maintain pagination
+	View Task
+		Task Info (Name, deadline, status, assigned to)
+		Edit Button
 	Add Task
 		Visual date entry
 		User dropdown
@@ -31,4 +35,4 @@ Tasks
 			Frontend
 			Backend(?)
 	Edit Task
-		Also has completed button
+		Also has completed

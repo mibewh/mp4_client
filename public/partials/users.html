@@ -13,9 +13,9 @@
 				<table>
 					<tbody>
 						<tr ng-repeat="user in users">
-							<td><a href="#/users/{{user._id}}">{{user.name}}</a></td>
+							<td><a ng-href="#/users/{{user._id}}">{{user.name}}</a></td>
 							<td>{{user.email}}</td>
-							<td class="text-right"><button ng-click="delete(user._id)" type="button" class="button tableButton alert">Delete</button></td>
+							<td class="text-right"><button ng-click="delete(user)" type="button" class="button tableButton alert">Delete</button></td>
 						</tr>
 					</tbody>
 				</table>
