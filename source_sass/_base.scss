@@ -18,3 +18,17 @@
 .right {
 	float: right;
 }
+
+.picker {
+	font-family: $body-font-family;
+}
+
+._720kb-datepicker-calendar {
+  visibility:visible;
+	position: relative;
+	display: inline;
+}
+
+.red {
+	color: firebrick;
+}

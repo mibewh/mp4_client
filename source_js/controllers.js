@@ -13,7 +13,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function
 
 mp4Controllers.controller('UsersController', ['$scope', 'Users', function($scope, Users) {
     //Get the user data
-    Users.get().success(function(data) {
+    Users.get({'name': 1, 'email': 1, '_id': 1}).success(function(data) {
       $scope.users = data.data;
     });
     //Handle deletes
@@ -29,6 +29,8 @@ mp4Controllers.controller('UsersController', ['$scope', 'Users', function($scope
 mp4Controllers.controller('AddUserController', ['$scope', 'Users', function($scope, Users) {
     $(document).foundation(); //The fact that I have to do this is really dumb. Needed so callouts work
     $scope.user = {};
+    $scope.fail = false;
+    $scope.success = false;
     $scope.submit = function() {
       //Hide callouts
       $scope.fail = false;
@@ -45,12 +47,22 @@ mp4Controllers.controller('AddUserController', ['$scope', 'Users', function($sco
     }
 }]);
 
-mp4Controllers.controller('ProfileController', ['$scope', '$routeParams', 'Users', function($scope, $routeParams, Users) {
+mp4Controllers.controller('ProfileController', ['$scope', '$routeParams','Users', 'Tasks', function($scope, $routeParams, Users, Tasks) {
   //Fetch the user
   Users.getUser($routeParams.id).success(function(data) {
     $scope.user = data.data;
+    //Fetch pending tasks
+    Tasks.getBulk($scope.user.pendingTasks, true).success(function(data) {
+      $scope.pending = data.data;
+    });
   });
-
+  $scope.getCompleted = function() {
+    //This probably should use the user ID to find tasks, but since
+    //the test script didn't add user IDs to tasks, the username will have to do (hopefully no duplicate names)
+    Tasks.getByUserName($scope.user.name, 'completed').success(function(data) {
+      $scope.completed = data.data;
+    });
+  };
 }]);
 
 mp4Controllers.controller('TasksController', ['$scope', 'Tasks', function($scope, Tasks) {
@@ -74,12 +86,80 @@ mp4Controllers.controller('TasksController', ['$scope', 'Tasks', function($scope
   $scope.changePage = function(newPage) {
     $scope.page = newPage;
     reload();
-  }
+  };
   $scope.getDate = function(date) {
     var d = new Date(date);
     return d.toLocaleDateString("en-us")
-  }
+  };
+  $scope.delete = function(task) {
+    Tasks.delete(task._id).success(function(data) {
+      reload();
+    });
+  };
+  $scope.update(); //Initialize
+}]);
 
-  $scope.update();
+mp4Controllers.controller('TaskInfoController', ['$scope', '$routeParams', 'Tasks', function($scope, $routeParams, Tasks) {
+  $scope.getDate = function(date) {
+    var d = new Date(date);
+    return d.toLocaleDateString("en-us")
+  };
+  Tasks.getTask($routeParams.id).success(function(data) {
+    $scope.task = data.data;
+  });
+}]);
 
+mp4Controllers.controller('AddTaskController', ['$scope', 'Users', 'Tasks', function($scope, Users, Tasks) {
+  $(document).foundation(); //The fact that I have to do this is really dumb. Needed so callouts work
+  $scope.task = {};
+  $scope.success = false;
+  $scope.fail = false;
+  Users.get({'_id': 1, 'name': 1}).success(function(data) {
+    $scope.users = data.data;
+    $scope.users.unshift({'_id': '', 'name': 'unassigned'});
+    $scope.selectedUser = $scope.users[0];
+  });
+  $scope.submit = function() {
+    $scope.task.assignedUserName = $scope.selectedUser.name;
+    $scope.task.assignedUser = $scope.selectedUser._id;
+    Tasks.post($scope.task)
+    .success(function(data) {
+      $scope.success = true;
+    })
+    .error(function(error) {
+      $scope.fail = true;
+      $scope.error = error.message;
+    });
+  };
+}]);
+
+mp4Controllers.controller('EditTaskController', ['$scope', '$routeParams', 'Users', 'Tasks', function($scope, $routeParams, Users, Tasks) {
+  $(document).foundation(); //The fact that I have to do this is really dumb. Needed so callouts work
+  $scope.success = false;
+  $scope.fail = false;
+  //Get the task to edit
+  Tasks.getTask($routeParams.id).success(function(data) {
+    $scope.task = data.data;
+    //Get the users list
+    Users.get({'_id': 1, 'name': 1}).success(function(data) {
+      $scope.users = data.data;
+      $scope.users.unshift({'_id': '', 'name': 'unassigned'});
+      //Find the corresponding user
+      $scope.selectedUser = $scope.users.filter(function(user) {
+        return user.name == $scope.task.assignedUserName;
+      })[0];
+    });
+  });
+  $scope.submit = function() {
+    $scope.task.assignedUserName = $scope.selectedUser.name;
+    $scope.task.assignedUser = $scope.selectedUser._id;
+    Tasks.put($scope.task)
+    .success(function(data) {
+      $scope.success = true;
+    })
+    .error(function(error) {
+      $scope.fail = true;
+      $scope.error = error.message;
+    });
+  };
 }]);

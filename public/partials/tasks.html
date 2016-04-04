@@ -6,9 +6,9 @@
         <label>Sort By
           <select ng-model="orderType" ng-change="update()"
             ng-options="option for option in ['dateCreated', 'deadline', 'name', 'assignedUserName']"></select>
-          <input type="radio" ng-model="order" ng-value="false" ng-change="update()" ng-selected><label for="ascending">Ascending</label>
-          <input type="radio" ng-model="order" ng-value="true" ng-change="update()"><label for="descending">Descending</label>
         </label>
+        <input type="radio" ng-model="order" ng-value="false" ng-change="update()" ng-selected><label for="ascending">Ascending</label>
+        <input type="radio" ng-model="order" ng-value="true" ng-change="update()"><label for="descending">Descending</label>
       </div>
       <div class="large-6 small-12 columns">
         <input type="radio" ng-model="subset" value="pending" ng-change="update()"><label for="pending">Pending</label>
@@ -46,6 +46,7 @@
 					</tbody>
 				</table>
 			</div>
+
     </div>
   </div>
 </div>

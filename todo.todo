@@ -1,0 +1,37 @@
+Navigation:
+  ✔ Implement @done(2016-04-01 23:25) @project(Navigation)
+Settings:
+  ✔ Implement @done(2016-04-01 23:25) @project(Settings)
+Users:
+  Profile:
+    ✔ Info @done(2016-04-01 23:26) @project(Users / Profile)
+    ☐ Tasks w/ Info
+    ☐ Complete button for tasks
+    ☐ Show completed tasks button
+  View Users:
+    ✔ Show info @done(2016-04-01 23:26) @project(Users / View Users)
+    ✔ Delete button @done(2016-04-01 23:26) @project(Users / View Users)
+  Add User:
+    ✔ Frontend Validation @done(2016-04-01 23:26) @project(Users / Add User)
+    ✔ Validate doesn't already exist @done(2016-04-01 23:26) @project(Users / Add User)
+    ✔ Validation doesn't work after 1 failure @done(2016-04-02 00:51) @project(Users / Add User)
+Tasks:
+  Show All Tasks:
+    ✔ Filter @done(2016-04-01 23:26) @project(Tasks / Show All Tasks)
+    ✔ Sort @done(2016-04-01 23:26) @project(Tasks / Show All Tasks)
+    ✔ Info/Delete Button @done(2016-04-01 23:26) @project(Tasks / Show All Tasks)
+    ✔ Pagination @done(2016-04-01 23:26) @project(Tasks / Show All Tasks)
+    ✔ Delete Task - Should reload to maintain pagination @done(2016-04-02 01:08) @project(Tasks / Show All Tasks)
+  View Task:
+    ✔ Task Info @done(2016-04-02 01:20) @project(Tasks / View Task)
+    ✔ Edit button @done(2016-04-02 01:20) @project(Tasks / View Task)
+  Add Task:
+    ✔ Visual date entry @done(2016-04-03 20:37) @project(Tasks / Add Task)
+    ✔ User dropdown @done(2016-04-03 20:37) @project(Tasks / Add Task)
+    ✔ Front/Backend validation @done(2016-04-03 21:55) @project(Tasks / Add Task)
+  Edit Task:
+    ✔ Also has a completed option @done(2016-04-03 21:55) @project(Tasks / Edit Task)
+Rippling:
+  ☐ Adding task should update user pending tasks
+  ☐ Deleting user should change tasks' user to unassigned
+  ☐ Deleting Task should remove from pendingTasks

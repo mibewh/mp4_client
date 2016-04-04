@@ -1,17 +1,17 @@
-<div ng-controller='UsersController'>
+<div ng-controller='AddUserController'>
 	<div class="row">
 		<div class="small-12 small-centered columns">
-			<h1>Users</h1>
+			<h1>Add User</h1>
 		</div>
 	</div>
 	<div class="row">
 		<div class="small-12 large-6 columns">
 			<form name="addForm" ng-submit="addForm.$valid && submit()" data-abide novalidate>
-				<label>Name
+				<label>Name <span class="red">*</span>
 					<input ng-model="user.name" type="text" required>
 					<span class="form-error">Name is Required</span>
 				</label>
-				<label>Email
+				<label>Email <span class="red">*</span>
 					<input ng-model="user.email" type="email" required>
 					<span class="form-error">Email is required</span>
 				</label>

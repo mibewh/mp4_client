@@ -1,7 +1,7 @@
-<div ng-controller='AddTaskController'>
+<div ng-controller='EditTaskController'>
 	<div class="row">
 		<div class="small-12 small-centered columns">
-			<h1>Add Task</h1>
+			<h1>Edit Task</h1>
 		</div>
 	</div>
 	<div class="row">
@@ -24,6 +24,10 @@
           <select ng-model="selectedUser" ng-change="update()" required
             ng-options="user as user.name for user in users"></select>
         </label>
+        <p>Completed
+          <input ng-model="task.completed" ng-value="true" type="radio">Yes
+          <input ng-model="task.completed" ng-value="false" type="radio">No
+        </p>
 				<button class="button" type="submit" value="Submit">Submit</button>
 			</form>
 		</div>
@@ -35,7 +39,7 @@
 		          <button class="close-button" type="button" ng-click="fail=false"><span>&times;</span></button>
     		</div>
     		<div class="success callout" ng-show="success">
-		          <h5>Task added</h5>
+		          <h5>Task edited</h5>
 		          <button class="close-button" type="button" ng-click="success=false"><span>&times;</span></button>
     		</div>
 		</div>
