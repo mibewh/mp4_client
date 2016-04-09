@@ -18,8 +18,8 @@ mp4Controllers.controller('UsersController', ['$scope', 'Users', function($scope
     });
     //Handle deletes
     $scope.delete = function(user) {
-      Users.delete(user._id).success(function(data) {
-        //Remove from list
+      Users.delete(user._id, user.name).then(function(data) { //Use the username to update tasks, since assignedUser is for some reason not always set
+        //Remove from visible list
         var index = $scope.users.indexOf(user);
         $scope.users.splice(index, 1);
       });
@@ -47,7 +47,7 @@ mp4Controllers.controller('AddUserController', ['$scope', 'Users', function($sco
     }
 }]);
 
-mp4Controllers.controller('ProfileController', ['$scope', '$routeParams','Users', 'Tasks', function($scope, $routeParams, Users, Tasks) {
+mp4Controllers.controller('ProfileController', ['$scope', '$routeParams','Users', 'Tasks', 'Task', function($scope, $routeParams, Users, Tasks, Task) {
   //Fetch the user
   $scope.showCompleted = false;
   $scope.pending = [];
@@ -74,7 +74,7 @@ mp4Controllers.controller('ProfileController', ['$scope', '$routeParams','Users'
   $scope.markComplete = function(task) {
     var index = $scope.pending.indexOf(task);
     task.completed = true;
-    Tasks.put(task); // Update in database
+    Task.put(task); // Update in database
     //Remove from pending
     $scope.pending.splice(index, 1);
     //Add to completed, so that it will show up even without another http request
@@ -82,7 +82,7 @@ mp4Controllers.controller('ProfileController', ['$scope', '$routeParams','Users'
   };
 }]);
 
-mp4Controllers.controller('TasksController', ['$scope', 'Tasks', function($scope, Tasks) {
+mp4Controllers.controller('TasksController', ['$scope', 'Tasks', 'Task', function($scope, Tasks, Task) {
   $scope.order = false;
   $scope.subset= 'pending';
   $scope.page = 0;
@@ -109,24 +109,24 @@ mp4Controllers.controller('TasksController', ['$scope', 'Tasks', function($scope
     return d.toLocaleDateString("en-us")
   };
   $scope.delete = function(task) {
-    Tasks.delete(task).then(function(data) {
+    Task.delete(task).then(function(data) {
       reload();
     });
   };
   $scope.update(); //Initialize
 }]);
 
-mp4Controllers.controller('TaskInfoController', ['$scope', '$routeParams', 'Tasks', function($scope, $routeParams, Tasks) {
+mp4Controllers.controller('TaskInfoController', ['$scope', '$routeParams', 'Task', function($scope, $routeParams, Task) {
   $scope.getDate = function(date) {
     var d = new Date(date);
     return d.toLocaleDateString("en-us")
   };
-  Tasks.getTask($routeParams.id).success(function(data) {
+  Task.getTask($routeParams.id).success(function(data) {
     $scope.task = data.data;
   });
 }]);
 
-mp4Controllers.controller('AddTaskController', ['$scope', 'Users', 'Tasks', function($scope, Users, Tasks) {
+mp4Controllers.controller('AddTaskController', ['$scope', 'Users', 'Task', function($scope, Users, Task) {
   $(document).foundation(); //The fact that I have to do this is really dumb. Needed so callouts work
   $scope.task = {};
   $scope.success = false;
@@ -139,9 +139,11 @@ mp4Controllers.controller('AddTaskController', ['$scope', 'Users', 'Tasks', func
   $scope.submit = function() {
     $scope.task.assignedUserName = $scope.selectedUser.name;
     $scope.task.assignedUser = $scope.selectedUser._id;
-    Tasks.post($scope.task)
+    Task.post($scope.task)
     .then(function(data) {
       $scope.success = true;
+      $scope.task = {}; //Clear task in view
+      $scope.selectedUser = $scope.users[0];
     })
     .catch(function(error) {
       $scope.fail = true;
@@ -150,12 +152,12 @@ mp4Controllers.controller('AddTaskController', ['$scope', 'Users', 'Tasks', func
   };
 }]);
 
-mp4Controllers.controller('EditTaskController', ['$scope', '$routeParams', 'Users', 'Tasks', function($scope, $routeParams, Users, Tasks) {
+mp4Controllers.controller('EditTaskController', ['$scope', '$routeParams', 'Users', 'Task', function($scope, $routeParams, Users, Task) {
   $(document).foundation(); //The fact that I have to do this is really dumb. Needed so callouts work
   $scope.success = false;
   $scope.fail = false;
   //Get the task to edit
-  Tasks.getTask($routeParams.id).success(function(data) {
+  Task.getTask($routeParams.id).success(function(data) {
     $scope.task = data.data;
     //Get the users list
     Users.get({'_id': 1, 'name': 1}).success(function(data) {
@@ -170,7 +172,7 @@ mp4Controllers.controller('EditTaskController', ['$scope', '$routeParams', 'User
   $scope.submit = function() {
     $scope.task.assignedUserName = $scope.selectedUser.name;
     $scope.task.assignedUser = $scope.selectedUser._id;
-    Tasks.put($scope.task)
+    Task.put($scope.task)
     .then(function(data) {
       $scope.success = true;
     })
