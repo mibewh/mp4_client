@@ -5,9 +5,9 @@ Settings:
 Users:
   Profile:
     ✔ Info @done(2016-04-01 23:26) @project(Users / Profile)
-    ☐ Tasks w/ Info
-    ☐ Complete button for tasks
-    ☐ Show completed tasks button
+    ✔ Tasks w/ Info @done(2016-04-08 18:49) @project(Users / Profile)
+    ✔ Complete button for tasks @done(2016-04-08 18:49) @project(Users / Profile)
+    ✔ Show completed tasks button @done(2016-04-08 18:49) @project(Users / Profile)
   View Users:
     ✔ Show info @done(2016-04-01 23:26) @project(Users / View Users)
     ✔ Delete button @done(2016-04-01 23:26) @project(Users / View Users)
@@ -32,6 +32,6 @@ Tasks:
   Edit Task:
     ✔ Also has a completed option @done(2016-04-03 21:55) @project(Tasks / Edit Task)
 Rippling:
-  ☐ Adding task should update user pending tasks
+  ✔ Adding task should update user pending tasks @done(2016-04-09 04:13) @project(Rippling)
   ☐ Deleting user should change tasks' user to unassigned
-  ☐ Deleting Task should remove from pendingTasks
+  ✔ Deleting Task should remove from pendingTasks @done(2016-04-09 04:34) @project(Rippling)

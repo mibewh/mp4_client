@@ -26,16 +26,25 @@
           <tr ng-repeat="task in pending">
             <td><a href="#/tasks/{{task._id}}">{{task.name}}</a></td>
             <td ng-bind="getDate(task.deadline)"></td>
-            <td class="text-right"><button ng-click="" type="button" class="button tableButton">Completed</button></td>
+            <td class="text-right"><button ng-click="markComplete(task)" type="button" class="button tableButton">Complete</button></td>
           </tr>
 				</table>
 			</div>
       <div class="text-center">
-        <button class="button" ng-click="toggleCompleted()">Show Completed</button>
+        <button class="button" ng-click="showCompletedTasks()">Show Completed</button>
       </div>
       <div class="table-scroll" ng-show="showCompleted">
 				<table>
-
+          <thead>
+            <th>Task</th>
+            <th>Deadline</th>
+            <th></th>
+          </thead>
+          <tr ng-repeat="task in completed">
+            <td><a href="#/tasks/{{task._id}}">{{task.name}}</a></td>
+            <td ng-bind="getDate(task.deadline)"></td>
+            <td class="text-right"></td>
+          </tr>
 				</table>
 			</div>
 		</div>

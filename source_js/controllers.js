@@ -49,19 +49,36 @@ mp4Controllers.controller('AddUserController', ['$scope', 'Users', function($sco
 
 mp4Controllers.controller('ProfileController', ['$scope', '$routeParams','Users', 'Tasks', function($scope, $routeParams, Users, Tasks) {
   //Fetch the user
+  $scope.showCompleted = false;
+  $scope.pending = [];
+  $scope.completed = [];
   Users.getUser($routeParams.id).success(function(data) {
     $scope.user = data.data;
     //Fetch pending tasks
-    Tasks.getBulk($scope.user.pendingTasks, true).success(function(data) {
+    Tasks.getBulk($scope.user.pendingTasks).success(function(data) {
       $scope.pending = data.data;
     });
   });
-  $scope.getCompleted = function() {
+  $scope.getDate = function(date) {
+    var d = new Date(date);
+    return d.toLocaleDateString("en-us")
+  };
+  $scope.showCompletedTasks = function() {
     //This probably should use the user ID to find tasks, but since
-    //the test script didn't add user IDs to tasks, the username will have to do (hopefully no duplicate names)
-    Tasks.getByUserName($scope.user.name, 'completed').success(function(data) {
-      $scope.completed = data.data;
+    //the test script didn't add user IDs to tasks, the username will have to work (hopefully no duplicate names)
+    $scope.showCompleted = true;
+      Tasks.getByUserName($scope.user.name, 'completed').success(function(data) {
+        $scope.completed = data.data;
     });
+  };
+  $scope.markComplete = function(task) {
+    var index = $scope.pending.indexOf(task);
+    task.completed = true;
+    Tasks.put(task); // Update in database
+    //Remove from pending
+    $scope.pending.splice(index, 1);
+    //Add to completed, so that it will show up even without another http request
+    $scope.completed.push(task);
   };
 }]);
 
@@ -92,7 +109,7 @@ mp4Controllers.controller('TasksController', ['$scope', 'Tasks', function($scope
     return d.toLocaleDateString("en-us")
   };
   $scope.delete = function(task) {
-    Tasks.delete(task._id).success(function(data) {
+    Tasks.delete(task).then(function(data) {
       reload();
     });
   };
@@ -123,10 +140,10 @@ mp4Controllers.controller('AddTaskController', ['$scope', 'Users', 'Tasks', func
     $scope.task.assignedUserName = $scope.selectedUser.name;
     $scope.task.assignedUser = $scope.selectedUser._id;
     Tasks.post($scope.task)
-    .success(function(data) {
+    .then(function(data) {
       $scope.success = true;
     })
-    .error(function(error) {
+    .catch(function(error) {
       $scope.fail = true;
       $scope.error = error.message;
     });
@@ -154,10 +171,10 @@ mp4Controllers.controller('EditTaskController', ['$scope', '$routeParams', 'User
     $scope.task.assignedUserName = $scope.selectedUser.name;
     $scope.task.assignedUser = $scope.selectedUser._id;
     Tasks.put($scope.task)
-    .success(function(data) {
+    .then(function(data) {
       $scope.success = true;
     })
-    .error(function(error) {
+    .catch(function(error) {
       $scope.fail = true;
       $scope.error = error.message;
     });
