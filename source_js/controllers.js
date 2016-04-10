@@ -93,7 +93,7 @@ mp4Controllers.controller('TasksController', ['$scope', 'Tasks', 'Task', functio
       $scope.tasks = data.data;
     });
     Tasks.getCount($scope.subset).success(function(data) {
-      $scope.pages = Math.floor(data.data / 10);
+      $scope.pages = Math.ceil(data.data / 10.0);
     });
   }
   $scope.update = function() {
